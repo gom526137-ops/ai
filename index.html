@@ -526,42 +526,109 @@ html +=
 
 "%)<br>";
 
+// ===========================
+// 위험도 계산 시스템
+// ===========================
+
+let riskScore = 0;
+
+
+// 위험 객체인지 판단
+
 if(
 
-item.class=="person" ||
+    item.class=="person" ||
 
-item.class=="car" ||
+    item.class=="car" ||
 
-item.class=="bus" ||
+    item.class=="bus" ||
 
-item.class=="truck" ||
+    item.class=="truck" ||
 
-item.class=="motorcycle" ||
+    item.class=="motorcycle" ||
 
-item.class=="bicycle"
+    item.class=="bicycle"
 
 ){
 
-danger=true;
+    // 객체 크기 계산
+    const objectSize = w*h;
+
+
+    // AI 신뢰도 반영
+    const confidence = item.score;
+
+
+    // 거리 추정
+    let distanceRisk = 0;
+
+
+    if(objectSize > 80000){
+
+        distanceRisk = 50;
+
+    }
+
+    else if(objectSize > 30000){
+
+        distanceRisk = 30;
+
+    }
+
+    else{
+
+        distanceRisk = 10;
+
+    }
+
+
+    // 최종 위험도
+    riskScore +=
+
+    distanceRisk * confidence;
+
 
 }
 
 });
 
-if(danger){
+if(riskScore >= 50){
 
-html +=
+    html +=
 
-"<br><span class='warning'>⚠ 충돌 위험!</span>";
+    "<br><span class='warning'>⚠ 충돌 위험!<br>위험도 : "
 
-}else{
+    +riskScore.toFixed(1)
 
-html +=
-
-"<br><span class='safe'>✅ 안전</span>";
+    +"%</span>";
 
 }
 
+else if(riskScore >=20){
+
+    html +=
+
+    "<br><span style='color:#ffe66d;font-size:22px;font-weight:bold;'>"
+
+    +"⚠ 주의 필요<br>위험도 : "
+
+    +riskScore.toFixed(1)
+
+    +"%</span>";
+
+}
+
+else{
+
+    html +=
+
+    "<br><span class='safe'>✅ 안전<br>위험도 : "
+
+    +riskScore.toFixed(1)
+
+    +"%</span>";
+
+}
 result.innerHTML=html;
 
 requestAnimationFrame(detectRealtime);

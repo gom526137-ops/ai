@@ -134,6 +134,38 @@ border-radius:10px;
 
 }
 
+.cameraBox{
+
+position:relative;
+
+}
+
+
+#dangerOverlay{
+
+position:absolute;
+
+top:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+background:rgba(0,0,0,0.7);
+
+padding:15px 30px;
+
+border-radius:15px;
+
+font-size:30px;
+
+font-weight:bold;
+
+color:#00ff99;
+
+z-index:10;
+
+}
 table{
 
 width:100%;
@@ -249,7 +281,15 @@ muted
 style="display:none;">
 </video>
 
+<div class="cameraBox">
+
 <canvas id="canvas"></canvas>
+
+<div id="dangerOverlay">
+대기 중
+</div>
+
+</div>
 
 
 </div>
@@ -385,6 +425,9 @@ document.getElementById("detectBtn");
 
 const result =
 document.getElementById("result");
+
+const dangerOverlay =
+document.getElementById("dangerOverlay");
 
 const weather =
 document.getElementById("weather");
@@ -598,6 +641,59 @@ if(riskScore >= 50){
     +riskScore.toFixed(1)
 
     +"%</span>";
+
+
+    dangerOverlay.innerHTML =
+    "⚠ 충돌 위험<br>"
+    +riskScore.toFixed(1)+"%";
+
+
+    dangerOverlay.style.color="#ff4d4d";
+
+
+}
+
+else if(riskScore >=20){
+
+    html +=
+
+    "<br><span style='color:#ffe66d;font-size:22px;font-weight:bold;'>"
+
+    +"⚠ 주의 필요<br>위험도 : "
+
+    +riskScore.toFixed(1)
+
+    +"%</span>";
+
+
+    dangerOverlay.innerHTML =
+    "⚠ 주의 필요<br>"
+    +riskScore.toFixed(1)+"%";
+
+
+    dangerOverlay.style.color="#ffe66d";
+
+
+}
+
+else{
+
+    html +=
+
+    "<br><span class='safe'>✅ 안전<br>위험도 : "
+
+    +riskScore.toFixed(1)
+
+    +"%</span>";
+
+
+    dangerOverlay.innerHTML =
+    "✅ 안전<br>"
+    +riskScore.toFixed(1)+"%";
+
+
+    dangerOverlay.style.color="#00ff99";
+
 
 }
 

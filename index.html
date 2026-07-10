@@ -252,8 +252,6 @@ style="display:none;">
 <canvas id="canvas"></canvas>
 
 
-<canvas id="canvas"></canvas>
-
 </div>
 
 <div class="card">
@@ -493,8 +491,9 @@ let html="";
 
 let danger=false;
 
-predictions.forEach(item=>{
+let riskScore = 0;
 
+predictions.forEach(item=>{
 const[x,y,w,h]=item.bbox;
 
 ctx.beginPath();
@@ -530,7 +529,6 @@ html +=
 // 위험도 계산 시스템
 // ===========================
 
-let riskScore = 0;
 
 
 // 위험 객체인지 판단
@@ -562,24 +560,23 @@ if(
     // 거리 추정
     let distanceRisk = 0;
 
+if(objectSize > 150000){
 
-    if(objectSize > 80000){
+    distanceRisk = 70;
 
-        distanceRisk = 50;
+}
 
-    }
+else if(objectSize > 60000){
 
-    else if(objectSize > 30000){
+    distanceRisk = 40;
 
-        distanceRisk = 30;
+}
 
-    }
+else{
 
-    else{
+    distanceRisk = 10;
 
-        distanceRisk = 10;
-
-    }
+}
 
 
     // 최종 위험도

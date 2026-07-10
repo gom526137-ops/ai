@@ -430,12 +430,18 @@ try{
 
 const stream = await navigator.mediaDevices.getUserMedia({
 
-video:{
-width:640,
-height:480
-},
+    video:{
 
-audio:false
+        facingMode:{
+            exact:"environment"
+        },
+
+        width:{ideal:1280},
+        height:{ideal:720}
+
+    },
+
+    audio:false
 
 });
 

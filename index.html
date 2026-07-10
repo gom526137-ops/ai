@@ -527,6 +527,13 @@ async function detectRealtime(){
 
 if(model==null)return;
 
+
+if(video.readyState !== 4) {
+    requestAnimationFrame(detectRealtime);
+    return;
+}
+
+
 ctx.drawImage(video,0,0,canvas.width,canvas.height);
 
 const predictions = await model.detect(video);

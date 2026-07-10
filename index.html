@@ -705,31 +705,7 @@ else{
 
 }
 
-else if(riskScore >=20){
 
-    html +=
-
-    "<br><span style='color:#ffe66d;font-size:22px;font-weight:bold;'>"
-
-    +"⚠ 주의 필요<br>위험도 : "
-
-    +riskScore.toFixed(1)
-
-    +"%</span>";
-
-}
-
-else{
-
-    html +=
-
-    "<br><span class='safe'>✅ 안전<br>위험도 : "
-
-    +riskScore.toFixed(1)
-
-    +"%</span>";
-
-}
 result.innerHTML=html;
 
 requestAnimationFrame(detectRealtime);

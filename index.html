@@ -455,6 +455,7 @@ const fusionResult =
 document.getElementById("fusionResult");
 
 let model = null;
+let weatherRisk = 1;
 
 async function loadModel(){
 
@@ -637,11 +638,9 @@ else{
 
 
     // 최종 위험도
-    riskScore +=
+   riskScore +=
 
-    distanceRisk * confidence;
-
-
+distanceRisk * confidence * weatherRisk;
 }
 
 });
@@ -733,13 +732,16 @@ cameraScore.innerHTML="90%";
 lidarScore.innerHTML="95%";
 radarScore.innerHTML="88%";
 
-break;
+weatherRisk = 1;
 
+break;
 case "rain":
 
 cameraScore.innerHTML="70%";
 lidarScore.innerHTML="92%";
 radarScore.innerHTML="90%";
+
+weatherRisk = 1.2;
 
 break;
 
@@ -748,6 +750,8 @@ case "fog":
 cameraScore.innerHTML="45%";
 lidarScore.innerHTML="90%";
 radarScore.innerHTML="94%";
+
+weatherRisk = 1.4;
 
 break;
 

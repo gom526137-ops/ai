@@ -379,11 +379,7 @@ AI 모델을 불러오는 중...
 
 <h2>🔀 센서 융합 결과</h2>
 
-<button id="fusionBtn">
 
-센서 융합 실행
-
-</button>
 
 <div id="fusionResult">
 
@@ -448,8 +444,7 @@ document.getElementById("lidarScore");
 const radarScore =
 document.getElementById("radarScore");
 
-const fusionBtn =
-document.getElementById("fusionBtn");
+
 
 const fusionResult =
 document.getElementById("fusionResult");
@@ -786,7 +781,43 @@ html+
 
 "<br><b>📍 LiDAR</b> : "+lidarDistance+
 
-"<br><b>📶 Radar</b> : "+radarSpeed;
+"<br><b>📶 Radar</b> : "+radarSpeed+
+
+"<hr>"+
+
+"<b>🤖 센서 융합 결과</b><br><br>"+
+
+"객체 : "+detectedObject+
+
+"<br>거리 : "+lidarDistance+
+
+"<br>예상 속도 : "+radarSpeed+
+
+"<br><br>";
+
+if(riskScore>=50){
+
+result.innerHTML+=
+
+"<span class='warning'>⚠ AI 종합 판단 : 자동 긴급 제동(AEB) 필요</span>";
+
+}
+
+else if(riskScore>=20){
+
+result.innerHTML+=
+
+"<span style='color:#ffe66d;font-weight:bold;'>⚠ AI 종합 판단 : 감속 및 주의</span>";
+
+}
+
+else{
+
+result.innerHTML+=
+
+"<span class='safe'>✅ AI 종합 판단 : 정상 주행 가능</span>";
+
+}
 
 requestAnimationFrame(detectRealtime);
 
@@ -839,53 +870,7 @@ break;
 // 센서 융합 시뮬레이션
 // =========================
 
-fusionBtn.addEventListener("click",()=>{
 
-let camera;
-let lidar;
-let radar;
-
-if(weather.value=="sunny"){
-
-camera="보행자 감지";
-lidar="거리 : 4.1 m";
-radar="속도 : 31 km/h";
-
-}
-
-if(weather.value=="rain"){
-
-camera="빗물로 영상 일부 손실";
-lidar="거리 : 4.3 m";
-radar="속도 : 30 km/h";
-
-}
-
-if(weather.value=="fog"){
-
-camera="안개로 객체 식별 어려움";
-lidar="거리 : 4.2 m";
-radar="속도 : 29 km/h";
-
-}
-
-fusionResult.innerHTML=
-
-"📷 카메라 : "+camera+
-
-"<br><br>📍 LiDAR : "+lidar+
-
-"<br><br>📶 레이더 : "+radar+
-
-"<hr>"+
-
-"<b>🤖 AI 종합 판단</b><br><br>"+
-
-"센서 정보를 융합한 결과 전방 장애물이 존재합니다.<br>"+
-
-"<span class='warning'>⚠ 자동 긴급 제동(AEB) 작동 권장</span>";
-
-});
 
 
 // =========================

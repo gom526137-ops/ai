@@ -127,7 +127,7 @@ border-radius:10px;
 
 canvas{
 
-width:70%;
+width:80%;
 height:auto;
 aspect-ratio:4 / 3;
 object-fit:contain;
@@ -551,6 +551,10 @@ let danger=false;
 
 let riskScore = 0;
 
+let detectedObject = "없음";
+let lidarDistance = "-";
+let radarSpeed = "-";
+
 predictions.forEach(item=>{
 const[x,y,w,h]=item.bbox;
 
@@ -606,11 +610,72 @@ if(
     item.class=="bicycle"
 
 ){
-
+detectedObject = item.class;
     // 객체 크기 계산
     const objectSize = w*h;
+// LiDAR 거리 추정
+if(objectSize > 150000){
 
+    lidarDistance = "1.5 m";
 
+}else if(objectSize > 80000){
+
+    lidarDistance = "3.0 m";
+
+}else if(objectSize > 30000){
+
+    lidarDistance = "6.0 m";
+
+}else{
+
+    lidarDistance = "10 m";
+
+}
+// Radar 속도(시뮬레이션)
+
+switch(item.class){
+
+case "person":
+
+radarSpeed = "5 km/h";
+
+break;
+
+case "car":
+
+radarSpeed = "42 km/h";
+
+break;
+
+case "bus":
+
+radarSpeed = "35 km/h";
+
+break;
+
+case "truck":
+
+radarSpeed = "30 km/h";
+
+break;
+
+case "motorcycle":
+
+radarSpeed = "55 km/h";
+
+break;
+
+case "bicycle":
+
+radarSpeed = "18 km/h";
+
+break;
+
+default:
+
+radarSpeed = "-";
+
+}
     // AI 신뢰도 반영
     const confidence = item.score;
 
@@ -711,7 +776,17 @@ else{
 }
 
 
-result.innerHTML=html;
+result.innerHTML =
+
+html+
+
+"<hr>"+
+
+"<b>📷 Camera</b> : "+detectedObject+
+
+"<br><b>📍 LiDAR</b> : "+lidarDistance+
+
+"<br><b>📶 Radar</b> : "+radarSpeed;
 
 requestAnimationFrame(detectRealtime);
 
